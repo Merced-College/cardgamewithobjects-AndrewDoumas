@@ -1,17 +1,84 @@
+/* 
+Kirsten Richards
+Skylee Blaine
+Andrew Doumas
+
+1/28/25
+Making a Card Game with OOD
+*/
+
 #include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
 
 using namespace std;
 
 //your job is to fix this object
 class Card { // Keeps a card object
 public:
-  //put the constructors and getters and setters here
+
+  Card() : suit(""), rank(""), value(0) {}
+
+  Card(string SUITS,string RANKS,int VALUES){
+    suit = SUITS;
+    rank = RANKS;
+    value = VALUES;
+  }
+
+  //put the constructors and getters and setters here:
+
+  //getter for suit
+  string getSuit(){
+    return suit;
+  }
+
+  //getter for rank
+  string getRank(){
+    return rank;
+  }
+
+  // getter for value
+  int get_value() {
+    return value;
+  }
+
+  // //setter for suit
+  // void setSuit(string SUIT) {
+  //   suit = SUIT;
+  // }
+
+  // //setter for rank
+  // void setRank(string RANK) {
+  //   rank = RANK;
+  // }
+
+  // //setter for value
+  // void set_value(int v) {
+  //   value = v;
+  // }
+
+  //print card
+  void print_card(){
+    cout << rank << " of " << suit << endl;
+  }
+
+
 
 private:
   //put data variables here, look below to see what data variables you should have
+  string suit;
+  string rank;
+  int value;
 };
 
 //define your getters and setters here
+
+
+
+
+
 
 //the rest of the code is working code - if you define your object above
 const string SUITS[] = {"Hearts", "Diamonds", "Clubs", "Spades"};
@@ -26,6 +93,13 @@ int currentCardIndex = 0;
 defines the arrays and variables related to a deck of playing cards through the
 suits, ranks, the current card index, and the deck itself.
 */
+
+//win,loss,tie counters
+int wins = 0;
+int losses = 0;
+int ties = 0;
+
+
 
 void initializeDeck() {
   int deckIndex = 0;
@@ -68,6 +142,11 @@ int dealInitialPlayerCards() {
   return card1.get_value() + card2.get_value();
   //return cardValue(card1) + cardValue(card2);
 }
+int dealInitialDealerCards() {
+    Card card1 = dealCard();
+    cout << "Dealer's card: " << card1.getRank() << " of " << card1.getSuit()  << endl;
+    return card1.get_value();
+}
 
 int playerTurn(int playerTotal) {
   while (true) {
@@ -95,21 +174,86 @@ int playerTurn(int playerTotal) {
   return playerTotal;
 }
 
+void determineWinner(int playerTotal, int dealerTotal) {
+    if (dealerTotal > 21 || playerTotal > dealerTotal) {
+        cout << "You win!" << endl;
+        //add_win();
+        //add_chips();
+    } else if (dealerTotal == playerTotal) {
+        cout << "It's a tie!" << endl;
+        //add_tie();
+    } else {
+        cout << "Dealer wins!" << endl;
+        //add_losses();
+        //remove_chips();
+    }
+}
+
 
 int main() {
   initializeDeck();
   //printDeck();
   shuffleDeck();
- //printDeck();
+  //printDeck();
+  int playerTotal;
+  int dealerTotal;
 
-  int playerTotal = dealInitialPlayerCards();
-  cout << "The playerTotal is " << playerTotal << endl;
-  //int dealerTotal = dealInitialDealerCards();
+  bool continue_playing = true;
+  bool play_another = true;
+  bool player_bust = false;
+  string play_again;
 
-  playerTotal = playerTurn(playerTotal);
-  if (playerTotal > 21) {
-    cout << "You busted! Dealer wins." << endl;
-    return 0;
-  } 
-  
+
+  while(true == continue_playing){
+
+    player_bust = false;
+
+    playerTotal = dealInitialPlayerCards();
+    dealerTotal = dealInitialDealerCards();
+
+    cout << "The playerTotal is " << playerTotal << endl;
+    //int dealerTotal = dealInitialDealerCards();
+
+    playerTotal = playerTurn(playerTotal);
+    if (playerTotal > 21) {
+      cout << "You busted! Dealer wins." << endl;
+      player_bust = true;
+    }
+
+      if(player_bust != true){
+        determineWinner(playerTotal, dealerTotal);
+      }
+
+    // determine if the player wishes to play another game
+    play_another = true;
+    while(play_another == true){
+      cout<<'\n'<< "Would you like to play again?"<<'\n'<<"Please enter either yes or no"<<endl;
+
+      // gets player choice and converts string to lowercase
+      play_again = "";
+      cin>> play_again;
+      std::transform(play_again.begin(), play_again.end(), play_again.begin(), ::tolower); 
+
+
+      //determines player input
+      if(play_again == "yes" || play_again == "no"){
+        cout<< play_again<<endl;
+        play_another = false;
+        if(play_again == "no"){
+          play_another = false;
+          continue_playing = false;
+        }
+      }
+      else{
+        cout<<"Something went wrong..."<<endl;
+
+
+      }
+
+    }
+  }
+
+
+
+
 }
