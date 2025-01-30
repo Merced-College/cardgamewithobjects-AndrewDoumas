@@ -68,8 +68,8 @@ private:
   }
 
   //setter for value
-  void set_value(int v) {
-    value = v;
+  void set_value(int VALUES) {
+    value = VALUES;
   }
 };
 
