@@ -174,8 +174,25 @@ int playerTurn(int playerTotal) {
   return playerTotal;
 }
 
+int dealerTurn(int dealerTotal) {
+  Card newCard;
+    while (dealerTotal < 17) { // dealer draws if total is less than 17
+      newCard = dealCard();
+      cout<<"The dealer drew a "<< newCard.getRank() << " of " << newCard.getSuit();
+      dealerTotal += newCard.get_value();
+      cout << "Dealer's total is " << dealerTotal << endl;
+    }
+    
+    return dealerTotal;
+}
+
 void determineWinner(int playerTotal, int dealerTotal) {
     if (dealerTotal > 21 || playerTotal > dealerTotal) {
+
+        if(dealerTotal > 21){
+          cout<<"Dealer busted"<< endl;
+        }
+
         cout << "You win!" << endl;
         //add_win();
         //add_chips();
@@ -220,7 +237,11 @@ int main() {
       player_bust = true;
     }
 
+    
+
       if(player_bust != true){
+        dealerTotal = dealerTurn(dealerTotal);
+
         determineWinner(playerTotal, dealerTotal);
       }
 
