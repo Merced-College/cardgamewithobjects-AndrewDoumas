@@ -22,9 +22,9 @@ public:
   Card() : suit(""), rank(""), value(0) {}
 
   Card(string SUITS,string RANKS,int VALUES){
-    suit = SUITS;
-    rank = RANKS;
-    value = VALUES;
+    setSuit(SUITS);
+    setRank(RANKS);
+    set_value(VALUES);
   }
 
   //put the constructors and getters and setters here:
@@ -44,41 +44,36 @@ public:
     return value;
   }
 
-  // //setter for suit
-  // void setSuit(string SUIT) {
-  //   suit = SUIT;
-  // }
-
-  // //setter for rank
-  // void setRank(string RANK) {
-  //   rank = RANK;
-  // }
-
-  // //setter for value
-  // void set_value(int v) {
-  //   value = v;
-  // }
+ 
 
   //print card
   void print_card(){
     cout << rank << " of " << suit << endl;
   }
 
-
-
 private:
   //put data variables here, look below to see what data variables you should have
   string suit;
   string rank;
   int value;
+
+   //setter for suit
+  void setSuit(string SUIT) {
+    suit = SUIT;
+  }
+
+  //setter for rank
+  void setRank(string RANK) {
+    rank = RANK;
+  }
+
+  //setter for value
+  void set_value(int v) {
+    value = v;
+  }
 };
 
 //define your getters and setters here
-
-
-
-
-
 
 //the rest of the code is working code - if you define your object above
 const string SUITS[] = {"Hearts", "Diamonds", "Clubs", "Spades"};
@@ -144,7 +139,7 @@ Card dealCard() {
 int dealInitialPlayerCards() {
   Card card1 = dealCard();
   Card card2 = dealCard();
-  cout << "Your cards: ";
+  cout << "Your cards: "<<endl;
   card1.print_card();
   card2.print_card();
   //cout << "Your cards: " << RANKS[card1 % 13] << " of " << SUITS[card1 / 13]
@@ -156,7 +151,7 @@ int dealInitialPlayerCards() {
 //function to deal the dealer 1 card at the start
 int dealInitialDealerCards() {
     Card card1 = dealCard();
-    cout << "Dealer's card: " << card1.getRank() << " of " << card1.getSuit()  << endl;
+    cout << "\nDealer's card: " << card1.getRank() << " of " << card1.getSuit()  << endl;
     return card1.get_value();
 }
 
@@ -192,11 +187,11 @@ int dealerTurn(int dealerTotal) {
   Card newCard;
     while (dealerTotal < 17) { // dealer draws if total is less than 17
       newCard = dealCard();
-      cout<<"The dealer drew a "<< newCard.getRank() << " of " << newCard.getSuit();
+      cout<<"The dealer drew a "<< newCard.getRank() << " of " << newCard.getSuit()<<endl;
       dealerTotal += newCard.get_value();
       cout << "Dealer's total is " << dealerTotal << endl;
     }
-    
+    cout<<endl;
     return dealerTotal;
 }
 
@@ -243,7 +238,8 @@ int main() {
     playerTotal = dealInitialPlayerCards();
     dealerTotal = dealInitialDealerCards();
 
-    cout << "The playerTotal is " << playerTotal << endl;
+    cout << "\nThe player total is " << playerTotal << endl;
+    cout<<"The dealer total is "<< dealerTotal <<"\n" << endl;
     //int dealerTotal = dealInitialDealerCards();
 
     playerTotal = playerTurn(playerTotal);
