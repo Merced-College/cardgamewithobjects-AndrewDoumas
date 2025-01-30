@@ -27,8 +27,6 @@ public:
     set_value(VALUES);
   }
 
-  //put the constructors and getters and setters here:
-
   //getter for suit
   string getSuit(){
     return suit;
@@ -44,8 +42,6 @@ public:
     return value;
   }
 
- 
-
   //print card
   void print_card(){
     cout << rank << " of " << suit << endl;
@@ -57,7 +53,7 @@ private:
   string rank;
   int value;
 
-   //setter for suit
+  //setter for suit
   void setSuit(string SUIT) {
     suit = SUIT;
   }
@@ -84,10 +80,6 @@ const int VALUES[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
 // int DECK[52];
 Card deck[52];
 int currentCardIndex = 0;
-/*
-defines the arrays and variables related to a deck of playing cards through the
-suits, ranks, the current card index, and the deck itself.
-*/
 
 //win,loss,tie counters
 int wins = 0;
@@ -230,7 +222,6 @@ int main() {
   bool player_bust = false;
   string play_again;
 
-
   while(true == continue_playing){
 
     player_bust = false;
@@ -248,7 +239,6 @@ int main() {
       player_bust = true;
     }
 
-    
       // dealer turn/determine winner if the player does not bust
       if(player_bust != true){
         dealerTotal = dealerTurn(dealerTotal);
@@ -278,8 +268,6 @@ int main() {
       }
       else{
         cout<<"Something went wrong..."<<endl;
-
-
       }
     }
   }
