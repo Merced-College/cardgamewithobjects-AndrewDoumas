@@ -100,7 +100,7 @@ int losses = 0;
 int ties = 0;
 
 
-
+// function that creates deck
 void initializeDeck() {
   int deckIndex = 0;
   for (int suitIndex = 0; suitIndex < 4; suitIndex++) {
@@ -112,11 +112,14 @@ void initializeDeck() {
   }
 }
 
+//function to print deck for debugging purposes
 void printDeck() {
   for (int i = 0; i < 52; i++)
+  
     deck[i].print_card();
 }
 
+// function to randomize deck
 void shuffleDeck() {
   srand((time(0)));
   for (int i = 0; i < 52; i++) {
@@ -127,10 +130,17 @@ void shuffleDeck() {
   }
 }
 
+//function to deal a card
 Card dealCard() { 
+  //reshuffles deck if the end of the deck has been reached
+  if(currentCardIndex >= 52){
+    shuffleDeck();
+    currentCardIndex = 0;
+  }
   return deck[currentCardIndex++]; 
 }
 
+//function to deal the player 2 cards at the start
 int dealInitialPlayerCards() {
   Card card1 = dealCard();
   Card card2 = dealCard();
@@ -142,12 +152,15 @@ int dealInitialPlayerCards() {
   return card1.get_value() + card2.get_value();
   //return cardValue(card1) + cardValue(card2);
 }
+
+//function to deal the dealer 1 card at the start
 int dealInitialDealerCards() {
     Card card1 = dealCard();
     cout << "Dealer's card: " << card1.getRank() << " of " << card1.getSuit()  << endl;
     return card1.get_value();
 }
 
+// function for player turn logic
 int playerTurn(int playerTotal) {
   while (true) {
     cout << "Your total is " << playerTotal << ". Do you want to hit or stand?"
@@ -174,6 +187,7 @@ int playerTurn(int playerTotal) {
   return playerTotal;
 }
 
+//function for logic behind dealer turn
 int dealerTurn(int dealerTotal) {
   Card newCard;
     while (dealerTotal < 17) { // dealer draws if total is less than 17
@@ -186,6 +200,7 @@ int dealerTurn(int dealerTotal) {
     return dealerTotal;
 }
 
+//function to determine who wins
 void determineWinner(int playerTotal, int dealerTotal) {
     if (dealerTotal > 21 || playerTotal > dealerTotal) {
 
@@ -238,7 +253,7 @@ int main() {
     }
 
     
-
+      // dealer turn/determine winner if the player does not bust
       if(player_bust != true){
         dealerTotal = dealerTurn(dealerTotal);
 
@@ -270,11 +285,6 @@ int main() {
 
 
       }
-
     }
   }
-
-
-
-
 }
